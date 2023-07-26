@@ -1,7 +1,48 @@
+//GIVEN I am using a daily planner to create a schedule
+//WHEN I open the planner
+//HEN the current day is displayed at the top of the calendar
+//WHEN I scroll down
+//THEN I am presented with time blocks for standard business hours of 9am to 5pm
+//WHEN I view the time blocks for that day
+//THEN each time block is color-coded to indicate whether it is in the past, present,
+//WHEN I click into a time block
+//THEN I can enter an event
+//WHEN I click the save button for that time block
+//THEN the text for that event is saved in local storage
+//WHEN I refresh the page
+//THEN the saved events persist
+
+import dayjsPluginUTC from 'dayjs-plugin-utc'
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(dayjsPluginUTC)
+
+var startButton = document.querySelector(".saveBtn");
+var today = document.querySelector("#currentDay");
+var now = dayjs();
+
+var utc = require('dayjs/plugin/utc')
+var timezone = require('dayjs/plugin/timezone')
+
+//dateFormat(date, format, localize = true) {
+// if (!localize) {
+//  return dayjs.utc(date).tz(dayjs.tz.guess()).format(format);
+// }
+// return dayjs.utc(date).local().tz(dayjs.tz.guess()).format(format);
+// },
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+var local = dayjs.tz.guess() ;
+
+
+today.textContent = now;
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+  startButton.addEventListener("click", saveDOM);
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener

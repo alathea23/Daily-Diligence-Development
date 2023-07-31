@@ -43,9 +43,7 @@ console.log(localT);
 
 today.textContent = localT;
 
-function saveDOM () {
-console.log("save")
-}
+
 
 //var utc = require('dayjs/plugin/utc')
 //var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
@@ -53,18 +51,24 @@ console.log("save")
 //dayjs.extend(utc)
 //dayjs.extend(timezone)
 
-dayjs.tz.guess()
-console.log (dayjs.tz.guess())
+//dayjs.tz.guess()
+//console.log (dayjs.tz.guess())
 
-document.querySelectorAll(".saveBtn").forEach(btn => {
-  var saveButton = document.quesrySelector(".saveBtn")
- });
-
+var hourBlock = document.querySelectorAll(".hour")
+const saveButton = document.querySelector(".saveBtn")
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
+function saveDOM () {
+  localStorage.name
+  console.log("save")
+  }
+
+
 $(function () {
-  saveButton.addEventListener("click", saveDOM);
+  console.log(5)
+  
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -84,3 +88,5 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+saveButton.addEventListener("click", saveDOM);

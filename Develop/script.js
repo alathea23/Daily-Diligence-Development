@@ -55,7 +55,18 @@ today.textContent = localT;
 //console.log (dayjs.tz.guess())
 
 var hourBlock = document.querySelectorAll(".hour")
-const saveButton = document.querySelector(".saveBtn")
+const saveButton8 = document.querySelector(".btn8")
+const saveButton9 = document.querySelector(".btn9")
+const saveButton10 = document.querySelector(".btn10")
+const saveButton11 = document.querySelector(".btn11")
+const saveButton12 = document.querySelector(".btn12")
+const saveButton1 = document.querySelector(".btn1")
+const saveButton2 = document.querySelector(".btn2")
+const saveButton3 = document.querySelector(".btn3")
+const saveButton4 = document.querySelector(".btn4")
+const saveButton5 = document.querySelector(".btn5")
+const saveButton6 = document.querySelector(".btn6")
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
@@ -68,7 +79,18 @@ function saveDOM () {
 
 $(function () {
   console.log(5)
-  
+  //Add a listener for click events on the save button.
+  saveButton8.addEventListener("click", saveDOM);
+  saveButton9.addEventListener("click", saveDOM);
+  saveButton10.addEventListener("click", saveDOM);
+  saveButton11.addEventListener("click", saveDOM);
+  saveButton12.addEventListener("click", saveDOM);
+  saveButton1.addEventListener("click", saveDOM);
+  saveButton2.addEventListener("click", saveDOM);
+  saveButton3.addEventListener("click", saveDOM);
+  saveButton4.addEventListener("click", saveDOM);
+  saveButton5.addEventListener("click", saveDOM);
+  saveButton6.addEventListener("click", saveDOM);
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -88,5 +110,3 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
-
-saveButton.addEventListener("click", saveDOM);

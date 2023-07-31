@@ -12,18 +12,20 @@
 //WHEN I refresh the page
 //THEN the saved events persist
 
-import dayjsPluginUTC from 'dayjs-plugin-utc'
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-dayjs.extend(dayjsPluginUTC)
 
-var startButton = document.querySelector(".saveBtn");
-var today = document.querySelector("#currentDay");
-var now = dayjs();
-
-var utc = require('dayjs/plugin/utc')
-var timezone = require('dayjs/plugin/timezone')
-
+//import dayjsPluginUTC from 'dayjs-plugin-utc';
+//import utc from 'dayjs/plugin/utc';
+//import timezone from 'dayjs/plugin/timezone';
+//dayjs.extend(utc);
+//dayjs.extend(timezone);
+//dayjs().tz('America/Toronto');
+//import dayjsPluginUTC from 'dayjs-plugin-utc'
+//import utc from "dayjs/plugin/utc";
+//import timezone from "dayjs/plugin/timezone";
+//dayjs.extend(dayjsPluginUTC)
+//var local = day.js(now).subtract(8, "hour")
+//var utc = require('dayjs/plugin/utc')
+//var timezone = require('dayjs/plugin/timezone')
 //dateFormat(date, format, localize = true) {
 // if (!localize) {
 //  return dayjs.utc(date).tz(dayjs.tz.guess()).format(format);
@@ -31,18 +33,38 @@ var timezone = require('dayjs/plugin/timezone')
 // return dayjs.utc(date).local().tz(dayjs.tz.guess()).format(format);
 // },
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
-var local = dayjs.tz.guess() ;
+var today = document.querySelector("#currentDay");
+var now = dayjs();
 
+console.log(now);
 
-today.textContent = now;
+var localT = dayjs().subtract(7, 'hours');
+console.log(localT);
+
+today.textContent = localT;
+
+function saveDOM () {
+console.log("save")
+}
+
+//var utc = require('dayjs/plugin/utc')
+//var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
+
+//dayjs.extend(utc)
+//dayjs.extend(timezone)
+
+dayjs.tz.guess()
+console.log (dayjs.tz.guess())
+
+document.querySelectorAll(".saveBtn").forEach(btn => {
+  var saveButton = document.quesrySelector(".saveBtn")
+ });
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  startButton.addEventListener("click", saveDOM);
+  saveButton.addEventListener("click", saveDOM);
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener

@@ -54,7 +54,9 @@ today.textContent = localT;
 //dayjs.tz.guess()
 //console.log (dayjs.tz.guess())
 
-var hourBlock = document.querySelectorAll(".hour")
+var hourTime = document.querySelector(".hour")
+var appointment = document.querySelector(".description")
+const clearButton = document.querySelector(".clear")
 const saveButton8 = document.querySelector(".btn8")
 const saveButton9 = document.querySelector(".btn9")
 const saveButton10 = document.querySelector(".btn10")
@@ -67,15 +69,34 @@ const saveButton4 = document.querySelector(".btn4")
 const saveButton5 = document.querySelector(".btn5")
 const saveButton6 = document.querySelector(".btn6")
 
+var hourBlock8 = document.querySelector("#hour-8")
+
+function getDOM () {
+  var storedTime = localStorage.getItem("Hour")
+  var storedAppointment = localStorage.getItem("appointment")
+
+  appointment.value = storedAppointment
+
+  }
+
+  getDOM ();
+
+  function clearDOM () {
+    localStorage.clear("appointment");
+    getDOM ()
+    }
+    
+//create local storage function
+function saveDOM () {
+  localStorage.setItem("Hour", hourTime.textContent)
+  localStorage.setItem("appointment", appointment.value)
+  //console tests
+  console.log(hourTime.textContent)
+  console.log(appointment.value)
+  }
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-
-function saveDOM () {
-  localStorage.name
-  console.log("save")
-  }
-
 
 $(function () {
   console.log(5)
@@ -91,7 +112,9 @@ $(function () {
   saveButton4.addEventListener("click", saveDOM);
   saveButton5.addEventListener("click", saveDOM);
   saveButton6.addEventListener("click", saveDOM);
-  // TODO: Add a listener for click events on the save button. This code should
+
+
+  
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
@@ -110,3 +133,5 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+clearButton.addEventListener("click", clearDOM);

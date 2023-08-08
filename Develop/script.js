@@ -36,6 +36,8 @@
 var today = document.querySelector("#currentDay");
 var now = dayjs();
 
+var i=5
+
 console.log(now);
 
 var localT = dayjs().subtract(7, 'hours');
@@ -43,8 +45,11 @@ console.log(localT);
 
 today.textContent = localT;
 
-
-
+function clock () {
+  for (i>0) {
+  localT = dayjs().subtract(-1, 'second');}
+}
+clock ()
 //var utc = require('dayjs/plugin/utc')
 //var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
 
@@ -71,29 +76,33 @@ const saveButton6 = document.querySelector(".btn6")
 
 var hourBlock8 = document.querySelector("#hour-8")
 
-function getDOM () {
+function getDOM() {
   var storedTime = localStorage.getItem("Hour")
   var storedAppointment = localStorage.getItem("appointment")
 
   appointment.value = storedAppointment
 
-  }
+}
 
-  getDOM ();
+getDOM();
 
-  function clearDOM () {
-    localStorage.clear("appointment");
-    getDOM ()
-    }
-    
+function clearDOM() {
+  localStorage.clear("appointment");
+  getDOM()
+}
+
+function timeSelection() {
+  removeAttribute()
+  addAttribute()
+}
 //create local storage function
-function saveDOM () {
+function saveDOM() {
   localStorage.setItem("Hour", hourTime.textContent)
   localStorage.setItem("appointment", appointment.value)
   //console tests
   console.log(hourTime.textContent)
   console.log(appointment.value)
-  }
+}
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
@@ -114,7 +123,7 @@ $(function () {
   saveButton6.addEventListener("click", saveDOM);
 
 
-  
+
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the

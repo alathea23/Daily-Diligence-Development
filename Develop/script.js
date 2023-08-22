@@ -36,20 +36,40 @@
 var today = document.querySelector("#currentDay");
 var now = dayjs();
 
-var i=5
+var block8 = document.querySelector("#hour-8")
+var block9 = document.querySelector("#hour-9")
+var block10 = document.querySelector("#hour-10")
+var block11 = document.querySelector("#hour-11")
+var block12 = document.querySelector("#hour-12")
+var block1 = document.querySelector("#hour-1")
+var block2 = document.querySelector("#hour-2")
+var block3 = document.querySelector("#hour-3")
+var block4 = document.querySelector("#hour-4")
+var block5 = document.querySelector("#hour-5")
+var block6 = document.querySelector("#hour-6")
 
-console.log(now);
 
-var localT = dayjs().subtract(7, 'hours');
+var i=1000000
+
+console.log(now)
+console.log(now.$H);
+
+var localT = 0
 console.log(localT);
 
 today.textContent = localT;
 
 function clock () {
-  for (i>0) {
-  localT = dayjs().subtract(-1, 'second');}
+  if (i>0) {
+    i --;}
+  setTimeout(clock, 1000)
+    console.log ("updating time")
+    localT = dayjs().subtract(7, 'hours')
+    today.textContent = localT
 }
+
 clock ()
+
 //var utc = require('dayjs/plugin/utc')
 //var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
 
@@ -58,8 +78,9 @@ clock ()
 
 //dayjs.tz.guess()
 //console.log (dayjs.tz.guess())
-
+var hourBlocksAll = document.querySelectorAll(".time-block")
 var hourTime = document.querySelector(".hour")
+var hourTimeAll = document.querySelectorAll(".hour")
 var appointment = document.querySelector(".description")
 const clearButton = document.querySelector(".clear")
 const saveButton8 = document.querySelector(".btn8")
@@ -74,14 +95,11 @@ const saveButton4 = document.querySelector(".btn4")
 const saveButton5 = document.querySelector(".btn5")
 const saveButton6 = document.querySelector(".btn6")
 
-var hourBlock8 = document.querySelector("#hour-8")
 
 function getDOM() {
-  var storedTime = localStorage.getItem("Hour")
   var storedAppointment = localStorage.getItem("appointment")
 
   appointment.value = storedAppointment
-
 }
 
 getDOM();
@@ -90,19 +108,54 @@ function clearDOM() {
   localStorage.clear("appointment");
   getDOM()
 }
+//console.log(hourBlocksAll[0])
+//console.log(hourBlocksAll[0].firstElementChild.innerHTML)
+//console.log(hourBlocksAll[0].innerText)
 
+
+//var hour_block = hourBlocksAll[0].innerText.slice(0,-2)
+//console.log(hour_block)
+//console.log(localT.$H > hour_block)
 function timeSelection() {
-  removeAttribute()
-  addAttribute()
-}
+  hourBlocksAll.forEach(hour => {
+    console.log(hour.innerText)
+    console.log(now.$H > hour.innerText.slice(0,-2))
+    if (now.$H > hour.innerText.slice(0,-2)){
+    hour.classList.remove("present")
+    hour.classList.remove("future")
+    hour.classList.add("past")}
+    else if (now.$H = hour.innerText.slice(0,-2)){
+      hour.classList.add("present")
+      hour.classList.remove("future")
+      hour.classList.remove("past")}
+      else if (now.$H < hour.innerText.slice(0,-2)){
+        hour.classList.remove("present")
+        hour.classList.add("future")
+        hour.classList.remove("past")}
+      }
+  )
+    }
+    
+
+timeSelection()
 //create local storage function
 function saveDOM() {
-  localStorage.setItem("Hour", hourTime.textContent)
+  localStorage.setItem("Hour", hourTime.innerHTML)
   localStorage.setItem("appointment", appointment.value)
   //console tests
   console.log(hourTime.textContent)
   console.log(appointment.value)
 }
+
+localStorage.setItem("Hour", hourTime.textContent)
+
+//localStorage.setItem("Hour", hourTime[0].textContent)
+
+//working on creating for loop to create array for local storage
+var appointments 
+
+//localStorage.setItem("Hours", JSON.stringify(appointments.value))
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.

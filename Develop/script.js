@@ -33,8 +33,11 @@
 // return dayjs.utc(date).local().tz(dayjs.tz.guess()).format(format);
 // },
 
+
 var today = document.querySelector("#currentDay");
-var now = dayjs();
+var now = dayjs().format("MMM D, h:mm:ss A");
+var nowHour = dayjs().format("H")
+console.log(nowHour)
 
 var block8 = document.querySelector("#hour-8")
 var block9 = document.querySelector("#hour-9")
@@ -49,26 +52,28 @@ var block5 = document.querySelector("#hour-5")
 var block6 = document.querySelector("#hour-6")
 
 
-var i=1000000
+var i = 1000000
 
 console.log(now)
 console.log(now.$H);
 
 var localT = 0
-console.log(localT);
 
 today.textContent = localT;
 
-function clock () {
-  if (i>0) {
-    i --;}
+function clock() {
+  if (i > 0) {
+    i--;
+  }
   setTimeout(clock, 1000)
-    console.log ("updating time")
-    localT = dayjs().subtract(7, 'hours')
-    today.textContent = localT
+  console.log("updating time")
+  localT = dayjs().format("MMM D, h:mm:ss A")
+  today.textContent = localT
 }
 
-clock ()
+clock()
+
+console.log(localT.$H);
 
 //var utc = require('dayjs/plugin/utc')
 //var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
@@ -82,79 +87,116 @@ var hourBlocksAll = document.querySelectorAll(".time-block")
 var hourTime = document.querySelector(".hour")
 var hourTimeAll = document.querySelectorAll(".hour")
 var appointment = document.querySelector(".description")
+var appointmentsAll = document.querySelectorAll(".description")
 const clearButton = document.querySelector(".clear")
-const saveButton8 = document.querySelector(".btn8")
-const saveButton9 = document.querySelector(".btn9")
-const saveButton10 = document.querySelector(".btn10")
-const saveButton11 = document.querySelector(".btn11")
-const saveButton12 = document.querySelector(".btn12")
-const saveButton1 = document.querySelector(".btn1")
-const saveButton2 = document.querySelector(".btn2")
-const saveButton3 = document.querySelector(".btn3")
-const saveButton4 = document.querySelector(".btn4")
-const saveButton5 = document.querySelector(".btn5")
-const saveButton6 = document.querySelector(".btn6")
+const saveButtons = document.querySelectorAll(".btn")
 
 
-function getDOM() {
-  var storedAppointment = localStorage.getItem("appointment")
+//function for single field
+//function getDOM() {
+// var storedAppointment = localStorage.getItem("appointment")
+// appointment.value = storedAppointment
+//}
+//getDOM();
 
-  appointment.value = storedAppointment
+function getDOMall() {
+  var recall = JSON.parse(localStorage.getItem("savedAppt")) || ["", "", "", "", "", "", "", "", "", "", "",]
+  console.log(recall)
+  let i = 0
+  appointmentsAll.forEach(appt => {
+    appt.value = recall[i]
+    i++
+  })
 }
 
-getDOM();
+getDOMall();
 
 function clearDOM() {
   localStorage.clear("appointment");
-  getDOM()
+  getDOMall()
 }
-//console.log(hourBlocksAll[0])
+
+//testing code commented out
+console.log(hourBlocksAll)
+console.log(localT)
+console.log(localT.$H)
+
+//alternate path to get hour - error was only 12 hour time
 //console.log(hourBlocksAll[0].firstElementChild.innerHTML)
 //console.log(hourBlocksAll[0].innerText)
-
-
 //var hour_block = hourBlocksAll[0].innerText.slice(0,-2)
 //console.log(hour_block)
 //console.log(localT.$H > hour_block)
+
 function timeSelection() {
+  console.log(nowHour)
+
   hourBlocksAll.forEach(hour => {
-    console.log(hour.innerText)
-    console.log(now.$H > hour.innerText.slice(0,-2))
-    if (now.$H > hour.innerText.slice(0,-2)){
-    hour.classList.remove("present")
-    hour.classList.remove("future")
-    hour.classList.add("past")}
-    else if (now.$H = hour.innerText.slice(0,-2)){
+    //console.log(nowHour)
+    var blockTime = hour.innerText.slice(0, -2)
+    if (blockTime < 8) {
+      blockHour = parseInt(blockTime) + 12
+    }
+    else {
+      blockHour = parseInt(blockTime)
+    }
+    if (nowHour > blockHour) {
+      hour.classList.remove("present")
+      hour.classList.remove("future")
+      hour.classList.add("past")
+      console.log(nowHour)
+      //console.log(blockHour)
+    }
+    else if (nowHour == blockHour) {
       hour.classList.add("present")
       hour.classList.remove("future")
-      hour.classList.remove("past")}
-      else if (now.$H < hour.innerText.slice(0,-2)){
-        hour.classList.remove("present")
-        hour.classList.add("future")
-        hour.classList.remove("past")}
-      }
-  )
+      hour.classList.remove("past")
+      console.log(nowHour)
+      //console.log(blockHour)
     }
-    
-
-timeSelection()
-//create local storage function
-function saveDOM() {
-  localStorage.setItem("Hour", hourTime.innerHTML)
-  localStorage.setItem("appointment", appointment.value)
-  //console tests
-  console.log(hourTime.textContent)
-  console.log(appointment.value)
+    else if (nowHour < blockHour) {
+      hour.classList.remove("present")
+      hour.classList.add("future")
+      hour.classList.remove("past")
+      console.log(nowHour)
+     // console.log(blockHour)
+    }
+  }
+  )
 }
 
-localStorage.setItem("Hour", hourTime.textContent)
+timeSelection()
+
+//updating code to iterate over a for loop
+function saveDOMall() {
+  let fullhour = 8
+  var apptLog = []
+  appointmentsAll.forEach(appt => {
+    console.log(appt.value)
+    let apptContent = [appt.value]
+    apptLog = apptLog.concat(apptContent)
+    localStorage.setItem("savedAppt", JSON.stringify(apptLog))
+    fullhour++
+  })
+  //Testing code below
+  //var recall = JSON.parse(localStorage.getItem("savedAppt"))
+  //console.log (recall)
+}
+
+//create local storage function for single button - replaced with savedDOMall
+//function saveDOM() {
+ // localStorage.setItem("Hour", hourTime.innerHTML)
+ // localStorage.setItem("appointment", appointment.value)
+  //console tests
+ // console.log(hourTime.textContent)
+ // console.log(appointment.value)
+//}
+
 
 //localStorage.setItem("Hour", hourTime[0].textContent)
-
 //working on creating for loop to create array for local storage
-var appointments 
 
-//localStorage.setItem("Hours", JSON.stringify(appointments.value))
+localStorage.setItem("Hours", JSON.stringify(appointmentsAll.value))
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
@@ -163,17 +205,8 @@ var appointments
 $(function () {
   console.log(5)
   //Add a listener for click events on the save button.
-  saveButton8.addEventListener("click", saveDOM);
-  saveButton9.addEventListener("click", saveDOM);
-  saveButton10.addEventListener("click", saveDOM);
-  saveButton11.addEventListener("click", saveDOM);
-  saveButton12.addEventListener("click", saveDOM);
-  saveButton1.addEventListener("click", saveDOM);
-  saveButton2.addEventListener("click", saveDOM);
-  saveButton3.addEventListener("click", saveDOM);
-  saveButton4.addEventListener("click", saveDOM);
-  saveButton5.addEventListener("click", saveDOM);
-  saveButton6.addEventListener("click", saveDOM);
+  saveButtons.forEach(button => button.addEventListener("click", saveDOMall))
+
 
 
 
